@@ -8,90 +8,91 @@ const generateMarkdown = require("./utils/generateMarkdown");
 
 // TODO: Create an array of questions for user input
 
-const questions = [
+const questions = inquirer
+.prompt([
 { 
     type:"input",
-    Message:"What is the title of this project?",
-    Name:"Title",
+    name:"title",
+    message:"What is the title of this project?",
+   
 },
 
 { 
     type:"input",
-    Message:"Please describe the project",
-    Name:"Description",
+    name:"description",
+    message:"Please describe the project",
     },
 
 { 
     type:"input",
-    Message:"How do I install this project?",
-    Name:"Installation",
+    name:"installation",
+    message:"How do I install this project?",
     },
 { 
     type:"input",
-    Message:"How do I use this project?",
-    Name:"Usage",
+    name:"usage",
+    message:"How do I use this project?",
     },
 { 
-    type:"List",
-    Message:"Select a License:",
-    Name:"License",
-    Choices: [
+    type:"list",
+    name:"license",
+    message:"Select a License:",
+    choices: [
         "MIT",
-        "GVL-GPL 3.0",
-        "APACHE 2.0",
-        "BSD 3",
+        "Apache",,
+        "BSD 3-Clause License",
         "None"
     ]
+    }
+    ,
+{ 
+    type:"input",
+    name:"contributors",
+    message:"Who contributed to this project?",
     },
 { 
     type:"input",
-    Message:"Who contributed to this project?",
-    Name:"Contributors",
+    name:"test",
+    message:"How do I test this project?",
     },
 { 
     type:"input",
-    Message:"How do I test this project?",
-    Name:"Test",
+    name:"questions",
+    message:"Please provide contact info additional questions:",
     },
 { 
     type:"input",
-    Message:"Please provide contact info additional questions:",
-    Name:"Questions",
-    },
-{ 
-    type:"input",
-    Message:"What is your github username?",
-    Name:"Username",
+    name:"username",
+    message:"What is your github username?",
     },
  { 
     type:"input",
-    Message:"What is your email address?",
-    Name:"Email",
+    name:"email",
+    message:"What is your email address?",
     },
 
-];
+])
 
-// TODO: Create a function to write README file
 
-function writeToFile(fileName, data) {
+// // TODO: Create a function to write README file
 
-    fs.writeFile("GENERATED-README.md", data, (err) => {
+// function writeToFile(fileName, data) {
+.then ()
+
+{fs.writeFile(generateMarkdown, data, (err) => {
         err
           ? console.log(err)
-          : console.log("GENERATED-README.md file was created and written!");
+          : console.log("GENERATED-README.md was successfully created");
       });
 
 }
 
 // TODO: Create a function to initialize app
 function init() {
-    return inquirer.prompt(questions).then(data=> {
-       const response = generateMarkdown(answers);
-        console.log(data)
-        // return generateMarkdown(data);
-    writeToFile("README.md", response);
-    })
+    return inquirer.prompt(questions).then((data) => {
+        writeToFile("GENERATED-README.md", generateMarkdown(data));
+      });
 }
 
-// Function call to initialize app
+// // Function call to initialize app
 init();
